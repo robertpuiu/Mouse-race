@@ -30,7 +30,7 @@ export class CollectElement implements IGameElement {
 
   onClicked(): string {
     this.isclicked = true;
-    this.color = 'gray';
+    this.color = 'none';
     return 'continue';
   }
 }
@@ -56,7 +56,7 @@ export class AvoidElement implements IGameElement {
 
   onClicked(): string {
     this.isclicked = true;
-    return 'over'; //game over
+    return 'over';
   }
 }
 export class ChangeElement implements IGameElement {
@@ -80,7 +80,10 @@ export class ChangeElement implements IGameElement {
 
   onClicked(): string {
     this.isclicked = true;
-    return this.color === 'green' ? 'continue' : 'over';
+    if(this.color==="green")
+    {this.color="none"
+    return "continue"}
+    else return "over"
   }
   change(): void {
     if (this.color === 'green') this.color = 'red';

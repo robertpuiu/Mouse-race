@@ -5,7 +5,8 @@ import ElementsContainer from './components/ElementsContainer';
 
 function App() {
   const [gameElements, setGameElements] = useState([]);
-
+  const [gameState,setGameState]=useState("Ready");
+  const [time, setTime]=useState(0);
   useEffect(() => {
     fetch('/api/getGameElements')
       .then((res) => res.json())
@@ -17,8 +18,10 @@ function App() {
   }, []);
   return (
     <div>
-      <Timer />
-      <ElementsContainer gameElements={gameElements} />
+      <div>{gameState}</div>
+      <Timer setGameState={setGameState} setTime={setTime} gameState={gameState}/>
+      {gameState==="Over"&&<div>Your Time: {time}`</div>}
+      {gameState==="Continue"&&<ElementsContainer gameElements={gameElements} setGameState={setGameState} time={time}/>}
     </div>
   );
 }

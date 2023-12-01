@@ -13,8 +13,7 @@ export class StartController {
   createElements(
     @Param('width', ParseIntPipe) width: number,
     @Param('height', ParseIntPipe) height: number,
-  ): number {
+  ) {
     this.gameService.createElements(width, height);
-    return this.startService.getShapes(width, height); //to change
   }
 }
