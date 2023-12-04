@@ -80,10 +80,10 @@ export class ChangeElement implements IGameElement {
 
   onClicked(): string {
     this.isclicked = true;
-    if(this.color==="green")
-    {this.color="none"
-    return "continue"}
-    else return "over"
+    if (this.color === 'green') {
+      this.color = 'none';
+      return 'continue';
+    } else return 'over';
   }
   change(): void {
     if (this.color === 'green') this.color = 'red';

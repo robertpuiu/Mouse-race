@@ -1,6 +1,6 @@
 import { IGameElement } from 'src/elements/elements.model';
 import { GameService } from './game.service';
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Delete } from '@nestjs/common';
 
 @Controller()
 export class GameController {
@@ -12,5 +12,9 @@ export class GameController {
   @Get('/status')
   getStatus(): string {
     return this.gameService.getStatus();
+  }
+  @Delete('/delete')
+  deleteAllElements(): void {
+    this.gameService.deleteElements();
   }
 }

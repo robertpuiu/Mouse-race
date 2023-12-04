@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import {
   IGameElement,
   CollectElement,
@@ -10,7 +11,6 @@ import { GameState } from './game.model';
 @Injectable()
 export class GameService {
   private GameData: GameState;
-
   constructor() {
     this.GameData = new GameState(); // Initialize GameState
   }
@@ -18,35 +18,38 @@ export class GameService {
     return this.GameData.allElements();
   }
   createElements(screenWidth: number, screenHeight) {
-    for (let i = 0; i < 3; i++) {
-      const newGameElement = new CollectElement(
-        this.GameData.allElements().length,
-        screenWidth,
-        screenHeight,
-      );
-      this.GameData.createGameElement(newGameElement);
-    }
-    for (let i = 0; i < 3; i++) {
-      const newGameElement = new AvoidElement(
-        this.GameData.allElements().length,
-        screenWidth,
-        screenHeight,
-      );
-      this.GameData.createGameElement(newGameElement);
-    }
-    for (let i = 0; i < 3; i++) {
-      const newGameElement = new ChangeElement(
-        this.GameData.allElements().length,
-        screenWidth,
-        screenHeight,
-      );
-      this.GameData.createGameElement(newGameElement);
+    if (this.GameData.allElements().length < 1) {
+      for (let i = 0; i < 3; i++) {
+        const newGameElement = new CollectElement(
+          this.GameData.allElements().length,
+          screenWidth,
+          screenHeight,
+        );
+        this.GameData.createGameElement(newGameElement);
+      }
+      for (let i = 0; i < 3; i++) {
+        const newGameElement = new AvoidElement(
+          this.GameData.allElements().length,
+          screenWidth,
+          screenHeight,
+        );
+        this.GameData.createGameElement(newGameElement);
+      }
+      for (let i = 0; i < 3; i++) {
+        const newGameElement = new ChangeElement(
+          this.GameData.allElements().length,
+          screenWidth,
+          screenHeight,
+        );
+        this.GameData.createGameElement(newGameElement);
+        this.GameData.changeStatus('Continue');
+        this.GameData.shuffleElements();
+      }
     }
   }
   onClick(index: number) {
     const Element: IGameElement = this.GameData.getGameElement(index);
     const clickResponse: string = Element.onClicked();
-    console.log('resp', clickResponse);
     if (clickResponse === 'over') this.GameData.changeStatus('Over');
     const needClickElements = this.GameData.allElements().filter(
       (x) => x.kind === 'change' || x.kind === 'collect',
@@ -66,5 +69,8 @@ export class GameService {
   ElementChange(index: number): void {
     const gameElement = this.GameData.getGameElement(index) as ChangeElement;
     gameElement.change();
+  }
+  deleteElements(): void {
+    this.GameData.deleteAllElements();
   }
 }

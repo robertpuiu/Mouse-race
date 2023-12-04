@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import { IGameElement } from './../elements/elements.model';
 export class GameState {
   private GameElements: IGameElement[];
@@ -21,5 +22,15 @@ export class GameState {
   }
   public createGameElement(gameElement: IGameElement): void {
     this.GameElements.push(gameElement);
+  }
+  public deleteAllElements(): void {
+    this.GameElements = [];
+  }
+  public shuffleElements(): void {
+    let allElements = this.GameElements;
+    for (let i = allElements.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [allElements[i], allElements[j]] = [allElements[j], allElements[i]];
+    }
   }
 }

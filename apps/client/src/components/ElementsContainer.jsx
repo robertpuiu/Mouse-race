@@ -1,17 +1,12 @@
+/* eslint-disable react/prop-types */
 import Element from './Elemenets';
 
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-      // Generate a random index
-      const j = Math.floor(Math.random() * (i + 1));
-
-      // Swap elements at indices i and j
-      [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
-export default function ElementsContainer({ gameElements, setGameState, time}) {
+export default function ElementsContainer({
+  gameElements,
+  elementsFetch,
+  setGameElements,
+  setGameState,
+}) {
   return (
     <div
       style={{
@@ -23,9 +18,14 @@ export default function ElementsContainer({ gameElements, setGameState, time}) {
         alignItems: 'center',
       }}
     >
-      {shuffleArray([...gameElements]).map((shape, index) => (
-        <Element 
-          key={index} shape={shape} setGameState={setGameState} time={time}/>
+      {gameElements.map((shape, index) => (
+        <Element
+          key={index}
+          shape={shape}
+          elementsFetch={elementsFetch}
+          setGameElements={setGameElements}
+          setGameState={setGameState}
+        />
       ))}
     </div>
   );
