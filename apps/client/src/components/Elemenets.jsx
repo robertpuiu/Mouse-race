@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 const Element = ({ shape, elementsFetch, setGameState }) => {
   const [color, setColor] = useState(shape.color);
   const [isClicked, setIsClicked] = useState(false);
-
+  const [gameStatus,setGameStatus]=useState();
   const [styles, setStyles] = useState({
     width: shape.shape === 'rectangle' ? '4vw' : '6vw',
     height: '6vw',
@@ -38,21 +38,29 @@ const Element = ({ shape, elementsFetch, setGameState }) => {
     }
   };
   useEffect(() => {
+    let timeoutId;
+
     if (shape.index > 5 && !isClicked) {
       const performAction = () => {
         changeElement(shape.index).then(() => {
           setColor((prevColor) => (prevColor === 'red' ? 'green' : 'red'));
         });
-
+  
         scheduleAction();
       };
       const scheduleAction = () => {
         const delay = Math.floor(Math.random() * 1000) + 2500; // Random delay between 1000 ms (1s) and 2000 ms (2s)
-        setTimeout(performAction, delay);
+        timeoutId = setTimeout(performAction, delay);
       };
       scheduleAction();
     }
-  }, []);
+  
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [gameStatus]);
 
   useEffect(() => {
     elementsFetch();
@@ -81,6 +89,7 @@ const Element = ({ shape, elementsFetch, setGameState }) => {
       }
 
       const data = await response.text();
+      setGameStatus(data);
       setGameState(data);
     } catch (error) {
       console.error('Error during the GET request:', error);

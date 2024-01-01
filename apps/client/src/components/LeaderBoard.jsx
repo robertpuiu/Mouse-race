@@ -39,15 +39,15 @@ export default function LeaderBoard() {
   }, []);
   return (
     <div style={leaderboardStyle}>
-      <h2 style={titleStyle}>Leaderboard</h2>
-      <ul style={{ listStyleType: 'none' }}>
-        <li style={titleStyle}>Place - Name - Time</li>
-        {races.map((race, index) => (
-          <li key={race.id} style={listItemStyle}>
-            {index + 1} - {race.name} - {race.time}s
-          </li>
-        ))}
-      </ul>
-    </div>
+  <h2 style={titleStyle}>Leaderboard</h2>
+  <ul style={{ listStyleType: 'none', paddingInlineStart: 0 }}>
+    <li style={titleStyle}>Place - Name - Time</li>
+    {races.map((race, index) => (
+      <li key={race.id} style={listItemStyle}>
+        <span>{index + 1}</span><span>-</span><span>{race.name}</span><span>-</span><span>{race.time}s</span>
+      </li>
+    ))}
+  </ul>
+</div>
   );
 }

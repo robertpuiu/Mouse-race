@@ -12,9 +12,9 @@ export default function ElementsContainer({
       style={{
         border: 'red',
         height: '80vh',
-        width: '80%',
+        width: '100%',
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
       }}
     >
