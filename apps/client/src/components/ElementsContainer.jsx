@@ -6,6 +6,7 @@ export default function ElementsContainer({
   elementsFetch,
   setGameElements,
   setGameState,
+  gameid,
 }) {
   return (
     <div
@@ -25,6 +26,7 @@ export default function ElementsContainer({
           elementsFetch={elementsFetch}
           setGameElements={setGameElements}
           setGameState={setGameState}
+          gameid={gameid}
         />
       ))}
     </div>

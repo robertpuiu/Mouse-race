@@ -2,10 +2,10 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
 
-const Element = ({ shape, elementsFetch, setGameState }) => {
+const Element = ({ shape, elementsFetch, setGameState, gameid }) => {
   const [color, setColor] = useState(shape.color);
   const [isClicked, setIsClicked] = useState(false);
-  const [gameStatus,setGameStatus]=useState();
+  const [gameStatus, setGameStatus] = useState();
   const [styles, setStyles] = useState({
     width: shape.shape === 'rectangle' ? '4vw' : '6vw',
     height: '6vw',
@@ -25,7 +25,7 @@ const Element = ({ shape, elementsFetch, setGameState }) => {
   const changeElement = async (index) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/change/${index}`,
+        `http://localhost:3000/api/change/${gameid}/${index}`,
         {
           method: 'POST',
         }
@@ -45,16 +45,16 @@ const Element = ({ shape, elementsFetch, setGameState }) => {
         changeElement(shape.index).then(() => {
           setColor((prevColor) => (prevColor === 'red' ? 'green' : 'red'));
         });
-  
+
         scheduleAction();
       };
       const scheduleAction = () => {
-        const delay = Math.floor(Math.random() * 1000) + 2500; // Random delay between 1000 ms (1s) and 2000 ms (2s)
+        const delay = Math.floor(Math.random() * 1000) + 2500;
         timeoutId = setTimeout(performAction, delay);
       };
       scheduleAction();
     }
-  
+
     return () => {
       if (timeoutId) {
         clearTimeout(timeoutId);
@@ -68,7 +68,7 @@ const Element = ({ shape, elementsFetch, setGameState }) => {
   const clickFetch = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/click/${shape.index}`,
+        `http://localhost:3000/api/click/${gameid}/${shape.index}`,
         {
           method: 'POST',
         }
@@ -83,7 +83,9 @@ const Element = ({ shape, elementsFetch, setGameState }) => {
   };
   const statusFetch = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/status');
+      const response = await fetch(
+        `http://localhost:3000/api/status/${gameid}`
+      );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }

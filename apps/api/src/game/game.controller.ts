@@ -1,20 +1,20 @@
 import { IGameElement } from 'src/elements/elements.model';
 import { GameService } from './game.service';
-import { Controller, Get, Delete } from '@nestjs/common';
+import { Controller, Get, Delete, Param } from '@nestjs/common';
 
 @Controller()
 export class GameController {
   constructor(private readonly gameService: GameService) {}
-  @Get('/getGameElements')
-  getGameElements(): IGameElement[] {
-    return this.gameService.allGameElements();
+  @Get('/getGameElements/:gameid')
+  getGameElements(@Param('gameid') gameid: string): IGameElement[] {
+    return this.gameService.allGameElements(gameid);
   }
-  @Get('/status')
-  getStatus(): string {
-    return this.gameService.getStatus();
+  @Get('/status/:gameid')
+  getStatus(@Param('gameid') gameid: string): string {
+    return this.gameService.getStatus(gameid);
   }
-  @Delete('/delete')
-  deleteAllElements(): void {
-    this.gameService.deleteElements();
+  @Delete(':gameid/delete')
+  deleteAllElements(@Param('gameid') gameid: string): void {
+    this.gameService.deleteElements(gameid);
   }
 }
