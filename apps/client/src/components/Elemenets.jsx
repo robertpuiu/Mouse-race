@@ -7,8 +7,8 @@ const Element = ({ shape, elementsFetch, setGameState, gameid }) => {
   const [isClicked, setIsClicked] = useState(false);
   const [gameStatus, setGameStatus] = useState();
   const [styles, setStyles] = useState({
-    width: shape.shape === 'rectangle' ? '4vw' : '6vw',
-    height: '6vw',
+    width: shape.shape === 'rectangle' ? '6vw' : '10vw',
+    height: '10vw',
     borderRadius: shape.shape === 'circle' ? '50%' : '10%',
     backgroundColor: color,
     cursor: 'pointer',
@@ -25,8 +25,8 @@ const Element = ({ shape, elementsFetch, setGameState, gameid }) => {
   useEffect(() => {
     if (gameStatus !== 'Continue') {
       setStyles({
-        width: shape.shape === 'rectangle' ? '4vw' : '6vw',
-        height: '6vw',
+        width: shape.shape === 'rectangle' ? '6vw' : '10vw',
+        height: '10vw',
         borderRadius: shape.shape === 'circle' ? '50%' : '10%',
         backgroundColor: color,
         cursor: 'pointer',

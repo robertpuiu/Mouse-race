@@ -74,7 +74,7 @@ function App() {
       case 'Finished':
         return 'Good Game!';
       default:
-        return ''; // Default case if none of the above
+        return '';
     }
   };
 
