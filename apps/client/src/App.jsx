@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './App.css';
+import './styles/App.css';
 import Timer from './components/Timer';
 import ElementsContainer from './components/ElementsContainer';
 import LeaderBoard from './components/LeaderBoard';
@@ -67,8 +67,6 @@ function App() {
 
   const renderGameState = (gameState) => {
     switch (gameState) {
-      case 'Continue':
-        return 'Click green Blocks!';
       case 'Over':
         return 'Game Over... Try again!';
       case 'Ready':
@@ -87,6 +85,8 @@ function App() {
   }, [gameState]);
   return (
     <div>
+      <h1>Mouse racer</h1>
+      <h3>Click the green blocks as fast as you can!</h3>
       <div>{renderGameState(gameState)}</div>
 
       <Timer

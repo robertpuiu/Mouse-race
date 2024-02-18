@@ -29,9 +29,11 @@ function Timer({ setGameState, setTime, gameState, createElements }) {
   };
   return (
     <div>
-      <button onClick={startTimer} disabled={isActive}>
-        Start
-      </button>
+      {gameState !== 'Continue' && (
+        <button onClick={startTimer} disabled={isActive}>
+          Start
+        </button>
+      )}
       <h1>{seconds} Seconds</h1>
     </div>
   );

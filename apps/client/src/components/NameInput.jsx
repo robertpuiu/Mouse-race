@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
-import '../NamePopup.css';
+import '../styles/NamePopup.css';
 import { doc, setDoc } from 'firebase/firestore';
 import db from '../firebase';
 import { v4 as uuidv4 } from 'uuid';
