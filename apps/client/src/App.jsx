@@ -9,8 +9,7 @@ function App() {
   const [gameElements, setGameElements] = useState([]);
   const [gameState, setGameState] = useState('Ready');
   const [time, setTime] = useState(0);
-  const [gameid, setGameid] = useState(0);
-
+  const [gameid, setGameid] = useState('gameid');
   const randomId = function (length = 6) {
     return Math.random()
       .toString(36)
@@ -18,13 +17,15 @@ function App() {
   };
   const createElements = async () => {
     try {
+      const newGameid = randomId();
+      setGameid(newGameid);
       const response = await fetch(
-        `http://127.0.0.1:3000/api/start/${gameid}/2000/1000`,
+        `http://127.0.0.1:3000/api/start/${newGameid}/2000/1000`,
         {
           method: 'POST',
         }
       );
-
+      await elementsFetch(newGameid);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -49,10 +50,10 @@ function App() {
       console.error('Error during the DELETE request:', error);
     }
   };
-  const elementsFetch = async () => {
+  const elementsFetch = async (newGameid) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/getGameElements/${gameid}`
+        `http://localhost:3000/api/getGameElements/${newGameid}`
       );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -64,34 +65,6 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    if (gameState === 'Ready') {
-      setGameid(randomId());
-      console.log(gameid);
-      createElements()
-        .then(() => elementsFetch())
-        .catch((error) => console.error('ErroRRR on gamState Ready:', error));
-    }
-    if (gameState === 'Over' || gameState === 'Finished') {
-      setGameState('Ready');
-    }
-  }, [gameState]);
-  // useEffect(() => {
-  //   // if (gameState === 'Over' || gameState === 'Finished') {
-  //   //   deleteElements()
-  //   //     .then(() => createElements())
-  //   //     .then(() => elementsFetch())
-  //   //     .catch((error) => console.error('An error occurred:', error));
-  //   // }
-  //   if (gameState === 'Continue') {
-  //     createElements()
-  //       .then(() => elementsFetch())
-  //       .catch((error) => console.error('An error occurred:', error));
-  //   }
-  // }, [gameState]);
-  // // useEffect(() => {
-  // //   createElements().then(() => elementsFetch());
-  // // }, []);
   const renderGameState = (gameState) => {
     switch (gameState) {
       case 'Continue':
@@ -106,6 +79,12 @@ function App() {
         return ''; // Default case if none of the above
     }
   };
+
+  useEffect(() => {
+    if (gameState === 'Over' || gameState === 'Finished') {
+      deleteElements();
+    }
+  }, [gameState]);
   return (
     <div>
       <div>{renderGameState(gameState)}</div>
@@ -114,13 +93,13 @@ function App() {
         setGameState={setGameState}
         gameState={gameState}
         setTime={setTime}
+        createElements={createElements}
       />
 
       {gameState === 'Continue' ? (
         <ElementsContainer
           gameElements={gameElements}
           elementsFetch={elementsFetch}
-          setGameElements={setGameElements}
           setGameState={setGameState}
           gameid={gameid}
         />

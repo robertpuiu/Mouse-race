@@ -4,7 +4,6 @@ import Element from './Elemenets';
 export default function ElementsContainer({
   gameElements,
   elementsFetch,
-  setGameElements,
   setGameState,
   gameid,
 }) {
@@ -24,7 +23,6 @@ export default function ElementsContainer({
           key={index}
           shape={shape}
           elementsFetch={elementsFetch}
-          setGameElements={setGameElements}
           setGameState={setGameState}
           gameid={gameid}
         />

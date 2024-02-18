@@ -22,6 +22,19 @@ const Element = ({ shape, elementsFetch, setGameState, gameid }) => {
     }));
   }, [color, isClicked]);
 
+  useEffect(() => {
+    if (gameStatus !== 'Continue') {
+      setStyles({
+        width: shape.shape === 'rectangle' ? '4vw' : '6vw',
+        height: '6vw',
+        borderRadius: shape.shape === 'circle' ? '50%' : '10%',
+        backgroundColor: color,
+        cursor: 'pointer',
+        marginTop: `${shape.verticalPosition * 80 - 40}vh`,
+      });
+    }
+  }, [gameStatus]);
+
   const changeElement = async (index) => {
     try {
       const response = await fetch(
@@ -62,9 +75,6 @@ const Element = ({ shape, elementsFetch, setGameState, gameid }) => {
     };
   }, [gameStatus]);
 
-  useEffect(() => {
-    elementsFetch();
-  }, []);
   const clickFetch = async () => {
     try {
       const response = await fetch(
@@ -99,14 +109,14 @@ const Element = ({ shape, elementsFetch, setGameState, gameid }) => {
   };
 
   const handleCircleClick = async () => {
-    clickFetch()
-      .then(() => elementsFetch())
-      .then(() => statusFetch())
-      .then(() => {})
-      .catch((error) => {
-        console.error(error);
-      });
-    setIsClicked(!isClicked);
+    try {
+      await clickFetch();
+      await elementsFetch(gameid);
+      await statusFetch();
+      setIsClicked(!isClicked);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

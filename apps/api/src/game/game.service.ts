@@ -99,7 +99,7 @@ export class GameService {
   getStatus(gameid: string): string {
     const gameState = this.findGameById(gameid);
     if (gameState) {
-      this.mapGames();
+      //this.mapGames();
       return gameState.getStatus();
     } else {
       return '';
