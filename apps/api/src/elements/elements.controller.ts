@@ -5,12 +5,18 @@ import { GameService } from 'src/game/game.service';
 export class ElementsController {
   constructor(private readonly gameService: GameService) {}
 
-  @Post('click/:index')
-  handleElementClick(@Param('index', ParseIntPipe) index: number): void {
-    this.gameService.onClick(index);
+  @Post('click/:gameid/:index')
+  handleElementClick(
+    @Param('gameid') gameid: string,
+    @Param('index', ParseIntPipe) index: number,
+  ): void {
+    this.gameService.onClick(gameid, index);
   }
-  @Post('change/:index')
-  handleElementChange(@Param('index', ParseIntPipe) index: number): void {
-    this.gameService.ElementChange(index);
+  @Post('change/:gameid/:index')
+  handleElementChange(
+    @Param('gameid') gameid: string,
+    @Param('index', ParseIntPipe) index: number,
+  ): void {
+    this.gameService.ElementChange(gameid, index);
   }
 }

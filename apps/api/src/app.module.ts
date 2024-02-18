@@ -1,7 +1,5 @@
 import { GameController } from './game/game.controller';
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { StartController } from './start/start.controller';
@@ -16,12 +14,7 @@ import { ElementsService } from './elements/elements.service';
       rootPath: join(__dirname, '../..', 'client', 'dist'),
     }),
   ],
-  controllers: [
-    AppController,
-    StartController,
-    GameController,
-    ElementsController,
-  ],
-  providers: [AppService, StartService, GameService, ElementsService],
+  controllers: [StartController, GameController, ElementsController],
+  providers: [StartService, GameService, ElementsService],
 })
 export class AppModule {}

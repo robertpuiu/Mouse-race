@@ -3,7 +3,9 @@ import { IGameElement } from './../elements/elements.model';
 export class GameState {
   private GameElements: IGameElement[];
   private status: string;
-  constructor() {
+  public gameid: string;
+  constructor(gameid: string) {
+    this.gameid = gameid;
     this.status = 'Continue';
     this.GameElements = [];
   }

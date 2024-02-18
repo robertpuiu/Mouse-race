@@ -9,11 +9,12 @@ export class StartController {
     private readonly gameService: GameService,
   ) {}
 
-  @Post(':width/:height')
-  createElements(
+  @Post(':gameid/:width/:height')
+  gameInit(
+    @Param('gameid') gameid: string,
     @Param('width', ParseIntPipe) width: number,
     @Param('height', ParseIntPipe) height: number,
   ) {
-    this.gameService.createElements(width, height);
+    this.gameService.gameInit(gameid, width, height);
   }
 }
