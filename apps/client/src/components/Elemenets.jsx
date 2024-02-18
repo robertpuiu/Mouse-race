@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
+import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-
 const Element = ({ shape, elementsFetch, setGameState, gameid }) => {
   const [color, setColor] = useState(shape.color);
   const [isClicked, setIsClicked] = useState(false);
@@ -12,8 +12,17 @@ const Element = ({ shape, elementsFetch, setGameState, gameid }) => {
     borderRadius: shape.shape === 'circle' ? '50%' : '10%',
     backgroundColor: color,
     cursor: 'pointer',
-    marginTop: `${shape.verticalPosition * 80 - 40}vh`,
   });
+
+  const shapeVariants = {
+    goUpAndDown: {
+      y: ['-25vh', '25vh', '-25vh'],
+      transition: {
+        duration: Math.random() * 7 + 5 - window.innerWidth / 800,
+        repeat: Infinity,
+      },
+    },
+  };
 
   useEffect(() => {
     setStyles((prevStyles) => ({
@@ -30,7 +39,6 @@ const Element = ({ shape, elementsFetch, setGameState, gameid }) => {
         borderRadius: shape.shape === 'circle' ? '50%' : '10%',
         backgroundColor: color,
         cursor: 'pointer',
-        marginTop: `${shape.verticalPosition * 80 - 40}vh`,
       });
     }
   }, [gameStatus]);
@@ -120,9 +128,9 @@ const Element = ({ shape, elementsFetch, setGameState, gameid }) => {
   };
 
   return (
-    <div>
+    <motion.div variants={shapeVariants} animate="goUpAndDown">
       <div style={styles} onClick={handleCircleClick}></div>
-    </div>
+    </motion.div>
   );
 };
 

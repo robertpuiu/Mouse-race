@@ -10,11 +10,11 @@ function Timer({ setGameState, setTime, gameState, createElements }) {
     if (gameState !== 'Continue') {
       setIsActive(false), setTime(seconds);
     }
-    if (isActive && seconds < 10) {
+    if (isActive && seconds < 20) {
       interval = setInterval(() => {
         setSeconds((seconds) => seconds + 1);
       }, 1000);
-    } else if (seconds === 10) {
+    } else if (seconds === 20) {
       setIsActive(false);
       setGameState('Over');
     }

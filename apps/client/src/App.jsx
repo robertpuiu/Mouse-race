@@ -86,7 +86,7 @@ function App() {
   return (
     <div>
       <h1>Mouse racer</h1>
-      <h3>Click the green blocks as fast as you can!</h3>
+      <h3>Click the green shapes as fast as you can!</h3>
       <div>{renderGameState(gameState)}</div>
 
       <Timer
