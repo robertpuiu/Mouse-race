@@ -1,10 +1,10 @@
 /* eslint-disable prefer-const */
 import {
-  IGameElement,
-  CollectElement,
-  AvoidElement,
-  ChangeElement,
-} from './../elements/elements.model';
+  IGameShape,
+  CollectShape,
+  AvoidShape,
+  ChangeShape,
+} from './../shapes/shapes.model';
 import { Injectable } from '@nestjs/common';
 import { GameState } from './game.model';
 
@@ -19,11 +19,11 @@ export class GameService {
     return this.GamesData.find((game) => game.gameid === gameid);
   }
 
-  allGameElements(gameid: string): IGameElement[] {
+  allGameShapes(gameid: string): IGameShape[] {
     const gameState = this.findGameById(gameid);
 
     if (gameState) {
-      return gameState.allElements();
+      return gameState.allShapes();
     } else {
       return [];
     }
@@ -32,10 +32,10 @@ export class GameService {
   gameInit(gameid: string, screenWidth: number, screenHeight: number): void {
     const gameState = new GameState(gameid);
     this.GamesData.push(gameState);
-    this.createElements(gameid, screenWidth, screenHeight);
+    this.createShapes(gameid, screenWidth, screenHeight);
   }
 
-  createElements(
+  createShapes(
     gameid: string,
     screenWidth: number,
     screenHeight: number,
@@ -47,29 +47,21 @@ export class GameService {
     }
     let index = 0;
     for (let i = 0; i < 3; i++) {
-      const newGameElement = new CollectElement(
-        index,
-        screenWidth,
-        screenHeight,
-      );
-      gameState.createGameElement(newGameElement);
+      const newGameShape = new CollectShape(index, screenWidth, screenHeight);
+      gameState.createGameShape(newGameShape);
       index++;
     }
     for (let i = 0; i < 3; i++) {
-      const newGameElement = new AvoidElement(index, screenWidth, screenHeight);
-      gameState.createGameElement(newGameElement);
+      const newGameShape = new AvoidShape(index, screenWidth, screenHeight);
+      gameState.createGameShape(newGameShape);
       index++;
     }
     for (let i = 0; i < 3; i++) {
-      const newGameElement = new ChangeElement(
-        index,
-        screenWidth,
-        screenHeight,
-      );
+      const newGameShape = new ChangeShape(index, screenWidth, screenHeight);
       index++;
-      gameState.createGameElement(newGameElement);
+      gameState.createGameShape(newGameShape);
       gameState.changeStatus('Continue');
-      gameState.shuffleElements();
+      gameState.shuffleShapes();
     }
   }
 
@@ -80,16 +72,16 @@ export class GameService {
       return;
     }
 
-    const Element: IGameElement = gameState.getGameElement(index);
-    const clickResponse: string = Element.onClicked();
+    const Shape: IGameShape = gameState.getGameShape(index);
+    const clickResponse: string = Shape.onClicked();
     if (clickResponse === 'over') gameState.changeStatus('Over');
-    const needClickElements = gameState
-      .allElements()
+    const needClickShapes = gameState
+      .allShapes()
       .filter((x) => x.kind === 'change' || x.kind === 'collect');
 
-    const correctClicks = needClickElements.filter((x) => x.isclicked);
+    const correctClicks = needClickShapes.filter((x) => x.isclicked);
     if (
-      needClickElements.length === correctClicks.length &&
+      needClickShapes.length === correctClicks.length &&
       gameState.getStatus() === 'Continue'
     ) {
       gameState.changeStatus('Finished');
@@ -106,17 +98,17 @@ export class GameService {
     }
   }
 
-  ElementChange(gameid: string, index: number): void {
+  ShapeChange(gameid: string, index: number): void {
     const gameState = this.findGameById(gameid);
     if (!gameState) {
       // Handle case where gameid does not exist
       return;
     }
-    const gameElement = gameState.getGameElement(index) as ChangeElement;
-    gameElement.change();
+    const gameShape = gameState.getGameShape(index) as ChangeShape;
+    gameShape.change();
   }
 
-  deleteElements(gameid: string): void {
+  deleteShapes(gameid: string): void {
     const index = this.GamesData.findIndex((game) => game.gameid === gameid);
     if (index !== -1) {
       this.GamesData.splice(index, 1);

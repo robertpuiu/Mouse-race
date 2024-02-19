@@ -2,21 +2,21 @@ import { Controller, Post, Param, ParseIntPipe } from '@nestjs/common';
 import { GameService } from 'src/game/game.service';
 
 @Controller('')
-export class ElementsController {
+export class ShapesController {
   constructor(private readonly gameService: GameService) {}
 
   @Post('click/:gameid/:index')
-  handleElementClick(
+  handleShapeClick(
     @Param('gameid') gameid: string,
     @Param('index', ParseIntPipe) index: number,
   ): void {
     this.gameService.onClick(gameid, index);
   }
   @Post('change/:gameid/:index')
-  handleElementChange(
+  handleShapeChange(
     @Param('gameid') gameid: string,
     @Param('index', ParseIntPipe) index: number,
   ): void {
-    this.gameService.ElementChange(gameid, index);
+    this.gameService.ShapeChange(gameid, index);
   }
 }

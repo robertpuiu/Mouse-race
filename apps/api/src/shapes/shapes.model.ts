@@ -1,4 +1,4 @@
-export interface IGameElement {
+export interface IGameShape {
   kind: string;
   index: number;
   verticalPosition: number;
@@ -9,7 +9,7 @@ export interface IGameElement {
   onClicked(): string;
 }
 
-export class CollectElement implements IGameElement {
+export class CollectShape implements IGameShape {
   kind: string;
   index: number;
   verticalPosition: number;
@@ -35,7 +35,7 @@ export class CollectElement implements IGameElement {
   }
 }
 
-export class AvoidElement implements IGameElement {
+export class AvoidShape implements IGameShape {
   kind: string;
   index: number;
   verticalPosition: number;
@@ -59,7 +59,7 @@ export class AvoidElement implements IGameElement {
     return 'over';
   }
 }
-export class ChangeElement implements IGameElement {
+export class ChangeShape implements IGameShape {
   kind: string;
   index: number;
   verticalPosition: number;

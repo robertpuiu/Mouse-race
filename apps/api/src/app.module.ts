@@ -5,8 +5,8 @@ import { join } from 'path';
 import { StartController } from './start/start.controller';
 import { StartService } from './start/start.service';
 import { GameService } from './game/game.service';
-import { ElementsController } from './elements/elements.controller';
-import { ElementsService } from './elements/elements.service';
+import { ShapesController } from './shapes/shapes.controller';
+import { ShapesService } from './shapes/shapes.service';
 
 @Module({
   imports: [
@@ -14,7 +14,7 @@ import { ElementsService } from './elements/elements.service';
       rootPath: join(__dirname, '../..', 'client', 'dist'),
     }),
   ],
-  controllers: [StartController, GameController, ElementsController],
-  providers: [StartService, GameService, ElementsService],
+  controllers: [StartController, GameController, ShapesController],
+  providers: [StartService, GameService, ShapesService],
 })
 export class AppModule {}

@@ -1,20 +1,20 @@
 /* eslint-disable prefer-const */
-import { IGameElement } from './../elements/elements.model';
+import { IGameShape } from './../shapes/shapes.model';
 export class GameState {
-  private GameElements: IGameElement[];
+  private GameShapes: IGameShape[];
   private status: string;
   public gameid: string;
   constructor(gameid: string) {
     this.gameid = gameid;
     this.status = 'Continue';
-    this.GameElements = [];
+    this.GameShapes = [];
   }
-  public getGameElement(index: number): IGameElement {
-    const gameElement = this.GameElements.find((x) => x.index === index);
-    return gameElement;
+  public getGameShape(index: number): IGameShape {
+    const gameShape = this.GameShapes.find((x) => x.index === index);
+    return gameShape;
   }
-  public allElements(): IGameElement[] {
-    return this.GameElements.map((element) => ({ ...element }));
+  public allShapes(): IGameShape[] {
+    return this.GameShapes.map((shape) => ({ ...shape }));
   }
   public getStatus(): string {
     return this.status;
@@ -22,17 +22,17 @@ export class GameState {
   public changeStatus(status: string): void {
     this.status = status;
   }
-  public createGameElement(gameElement: IGameElement): void {
-    this.GameElements.push(gameElement);
+  public createGameShape(gameShape: IGameShape): void {
+    this.GameShapes.push(gameShape);
   }
-  public deleteAllElements(): void {
-    this.GameElements = [];
+  public deleteAllShapes(): void {
+    this.GameShapes = [];
   }
-  public shuffleElements(): void {
-    let allElements = this.GameElements;
-    for (let i = allElements.length - 1; i > 0; i--) {
+  public shuffleShapes(): void {
+    let allShapes = this.GameShapes;
+    for (let i = allShapes.length - 1; i > 0; i--) {
       let j = Math.floor(Math.random() * (i + 1));
-      [allElements[i], allElements[j]] = [allElements[j], allElements[i]];
+      [allShapes[i], allShapes[j]] = [allShapes[j], allShapes[i]];
     }
   }
 }

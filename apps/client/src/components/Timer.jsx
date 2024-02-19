@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
 
-function Timer({ setGameState, setTime, gameState, createElements }) {
+function Timer({ setGameState, setTime, gameState, createShapes }) {
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
 
@@ -22,7 +22,7 @@ function Timer({ setGameState, setTime, gameState, createElements }) {
   }, [isActive, seconds]);
 
   const startTimer = async () => {
-    await createElements();
+    await createShapes();
     setSeconds(0);
     setIsActive(true);
     setGameState('Continue');
