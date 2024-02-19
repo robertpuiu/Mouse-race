@@ -34,7 +34,9 @@ function Timer({ setGameState, setTime, gameState, createShapes }) {
           Start
         </button>
       )}
-      <h1>{seconds} Seconds</h1>
+      {(seconds !== 0 || gameState === 'Continue') && (
+        <h1>{seconds} Seconds</h1>
+      )}
     </div>
   );
 }
